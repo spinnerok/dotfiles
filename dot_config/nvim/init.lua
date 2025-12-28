@@ -1,1 +1,2 @@
+require("spinnerok")
 print("hello")
