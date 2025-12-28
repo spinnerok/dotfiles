@@ -2,6 +2,12 @@
 
 My personal configuration files for various development tools and applications.
 
+## Contents
+
+This repository contains configuration files for:
+
+- Vim/Neovim
+
 ## Installation
 
 ### Using chezmoi
