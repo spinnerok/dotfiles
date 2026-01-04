@@ -32,6 +32,17 @@ vim.call("plug#begin")
 Plug("nvim-lua/plenary.nvim")
 -- Telescope: Fuzzy finder for files, buffers, etc.
 Plug("nvim-telescope/telescope.nvim", { tag = "0.2.0" })
+-- Color schemes: Various theme options for syntax highlighting and UI
+Plug 'ellisonleao/gruvbox.nvim'        -- Gruvbox theme (Lua port)
+Plug 'darianmorat/gruvdark.nvim'       -- Gruvbox dark variant
+Plug 'sainnhe/everforest'              -- Everforest theme with multiple palettes
+Plug 'sainnhe/gruvbox-material'        -- Gruvbox Material theme variant
+
+-- Treesitter: Advanced syntax highlighting and code understanding
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+
+-- Undotree: Visualize and navigate undo history as a tree
+Plug 'mbbill/undotree'
 
 -- Finalize plugin declarations
 vim.call("plug#end")
