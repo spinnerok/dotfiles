@@ -31,7 +31,7 @@ vim.call("plug#begin")
 -- Plenary: Lua utility functions used by other plugins, required by Telescope
 Plug("nvim-lua/plenary.nvim")
 -- Telescope: Fuzzy finder for files, buffers, etc.
-Plug("nvim-telescope/telescope.nvim", { tag = "0.2.0" })
+Plug("nvim-telescope/telescope.nvim", { tag = "*" })
 -- Color schemes: Various theme options for syntax highlighting and UI
 Plug 'ellisonleao/gruvbox.nvim'        -- Gruvbox theme (Lua port)
 Plug 'darianmorat/gruvdark.nvim'       -- Gruvbox dark variant
