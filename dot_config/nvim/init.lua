@@ -1,2 +1,2 @@
-require("spinnerok")
-print("hello")
+require("remap")
+require("plug")
