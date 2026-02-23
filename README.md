@@ -10,41 +10,38 @@ This repository contains configuration files for:
 
 ## Installation
 
-### Using chezmoi
 
-My preferred way to manage these dotfiles is using [chezmoi](https://www.chezmoi.io/):
+I manage these dotfiles using a bare Git repository. While the commands are lengthy, you can simplify them with an alias. The following script sets up the initial installation by cloning an existing repository:
 
-```bash
-# Install chezmoi
-sh -c "$(curl -fsLS get.chezmoi.io)"
-
-# Initialize with this repository
-chezmoi init https://github.com/yourusername/dotfiles.git
-
-# Preview changes
-chezmoi diff
-
-# Apply the dotfiles
-chezmoi apply -v
-```
-
-To update later:
 
 ```bash
-chezmoi update -v
+#!/usr/bin/env bash
+
+# Clone the dotfiles repository as a bare repository
+git clone --bare git@github.com:spinnerok/dotfiles.git $HOME/.dotfiles
+
+# Create a function to manage dotfiles using git
+function dotfiles {
+    git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+}
+
+# Create a backup directory for existing dotfiles
+mkdir -p .dotfiles-backup
+
+# Attempt to checkout dotfiles from the repository
+dotfiles checkout
+if [ $? = 0 ]; then
+     echo "Checked out dotfiles from git@github.com:spinnerok/dotfiles.git"
+else
+     # If checkout fails, backup conflicting files and retry
+     echo "Moving existing dotfiles to ~/.dotfiles-backup"
+     dotfiles checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .dotfiles-backup/{}
+     dotfiles checkout
+fi
+
+# Hide untracked files from git status output
+dotfiles config status.showUntrackedFiles no
 ```
-
-### Manual Installation
-
-```bash
-git clone https://github.com/yourusername/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-# Symlink or copy files as needed
-```
-
-## Usage
-
-Review the configurations and adapt them to your needs before applying.
 
 ## License
 
