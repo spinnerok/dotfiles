@@ -20,20 +20,32 @@ git clone --bare git@github.com:spinnerok/dotfiles.git $HOME/.dotfiles
 
 # Create a function to manage dotfiles using git
 function dotfiles {
-     git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
+    git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME "$@"
 }
 
-# Create a backup directory for existing dotfiles
-mkdir -p ~/.dotfiles-backup
-
 # Attempt to checkout dotfiles from the repository
-if dotfiles checkout; then
-     echo "Checked out dotfiles from git@github.com:spinnerok/dotfiles.git"
+if dotfiles checkout >/dev/null 2>&1; then
+    echo "Checked out dotfiles from git@github.com:spinnerok/dotfiles.git"
 else
-     # If checkout fails, backup conflicting files and retry
-     echo "Moving existing dotfiles to ~/.dotfiles-backup"
-     dotfiles checkout 2>&1 | grep -E "^\s+\." | awk '{print $1}' | xargs -I {} mv {} ~/.dotfiles-backup/{}
-     dotfiles checkout
+    # If checkout fails, backup conflicting files and retry
+    echo "Moving existing dotfiles to ~/.dotfiles-backup"
+
+    # Create a backup directory for existing dotfiles
+    mkdir -p ~/.dotfiles-backup
+
+    dotfiles checkout 2>&1 | awk '
+        /would be overwritten by checkout:/ { capture = 1; next }
+        /Please move or remove them before you switch branches\./ { capture = 0 }
+        capture && /^[[:space:]]/ {
+            sub(/^[[:space:]]+/, "", $0)
+            print $0
+        }
+    ' | while IFS= read -r file; do
+        echo "Backing up $file to ~/.dotfiles-backup/$file"
+        mkdir -p "$HOME/.dotfiles-backup/$(dirname "$file")"
+        mv "$HOME/$file" "$HOME/.dotfiles-backup/$file"
+    done
+    dotfiles checkout
 fi
 
 # Hide untracked files from git status output
