@@ -1,6 +1,4 @@
-local treesitter = require('nvim-treesitter')
-
-local parsers = {
+local installed = {
   'bash',
   'diff',
   'git_rebase',
@@ -25,4 +23,13 @@ local parsers = {
   'yaml',
 }
 
-treesitter.install(parsers)
+return {
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  opts = {
+    ensure_installed = installed,
+    auto_install = true,
+    highlight = { enable = true },
+    indent = { enable = true },
+  },
+}

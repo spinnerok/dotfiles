@@ -1,2 +1,2 @@
 require("remap")
-require("plug")
+require("config.lazy")
