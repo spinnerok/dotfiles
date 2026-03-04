@@ -109,10 +109,14 @@ export LC_ALL=en_US.UTF-8
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # K8s
-PROMPT='$(kube_ps1)'$PROMPT
+if command -v kubectl >/dev/null 2>&1; then
+  echo "kubectl is available"
+  PROMPT='$(kube_ps1)'$PROMPT
 
-alias k="kubectl"
-source <(kubectl completion zsh);
+  alias k="kubectl"
+  source <(kubectl completion zsh);
+fi
+
 
 alias mk='$(brew --prefix)/bin/minikube'
 
@@ -146,15 +150,26 @@ if [[ -s $HOME/.pyenv ]]; then
     export PYENV_ROOT="$HOME/.pyenv"
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
     eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+
+    if pyenv commands | grep -qx "virtualenv-init"; then
+      eval "$(pyenv virtualenv-init -)"
+    fi
 fi
 
 # Initialise rbenv
-export PATH="$HOME/.rbenv/shims:$PATH"
-eval "$(rbenv init -)"
+if [[ -d "$HOME/.rbenv" ]]; then
+  export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+fi
+
+if command -v rbenv >/dev/null 2>&1; then
+  eval "$(rbenv init -)"
+fi
 
 # Initialise nvm
-export NVM_DIR="$HOME/.nvm"
+if [[ -d "$HOME/.nvm" ]]; then
+  export NVM_DIR="$HOME/.nvm"
+fi
+
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
