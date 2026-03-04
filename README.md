@@ -65,6 +65,37 @@ git() {
 
 ```
 
+## Components
+
+### Tmux
+
+#### Plugins
+
+- **[Tmux Plugin Manager](https://github.com/tmux-plugins/tpm)** - Package manager for managing Tmux plugins.
+
+    It will be automatically cloned and initialized on first use (see `.tmux.conf` for details) to manage all Tmux plugins listed below.
+
+    Key bindings:
+    - Install plugins: `prefix + I`
+    - Update plugins: `prefix + U`
+
+- **[Tmux Sensible](https://github.com/tmux-plugins/tmux-sensible)** - Provides sensible tmux defaults for improved usability.
+
+    The options can be found in the [tmux-sensible documentation](https://github.com/tmux-plugins/tmux-sensible?tab=readme-ov-file#options).
+
+    Key bindings:
+    - `prefix + R` - Reload the tmux configuration file
+    - `Ctrl + [a + p]` - Switch to the previous window while holding Ctrl and keep pressing `a + p`
+    - `Ctrl + [a + n]` - Switch to the next window while holding Ctrl and keep pressing `a + n`
+
+
+- **[Tmux Resurrect](https://github.com/tmux-plugins/tmux-resurrect)** - Saves and restores complete Tmux sessions.
+
+    Key bindings:
+    - `prefix + Ctrl-s` - Save session
+    - `prefix + Ctrl-r` - Restore session
+
+
 ## License
 
 MIT
