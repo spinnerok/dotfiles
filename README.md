@@ -52,10 +52,17 @@ fi
 dotfiles config status.showUntrackedFiles no
 ```
 
-You can create an alias to simplify commands:
+To manage the dotfiles create an alias to simplify commands:
 
 ```bash
-alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+git() {
+  if [ "$PWD" = "$HOME" ]; then
+    command git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
+  else
+    command git "$@"
+  fi
+}
+
 ```
 
 ## License
