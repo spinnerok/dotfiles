@@ -70,7 +70,7 @@ ZSH_CUSTOM=~/.zsh-custom
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(aws git kube-ps1 docker docker-compose)
+plugins=(aws git kube-ps1 docker docker-compose zsh-autosuggestions zsh-completions zsh-syntax-highlighting fast-syntax-highlighting)
 
 if [[ -s $ZSH/oh-my-zsh.sh ]]; then
   source $ZSH/oh-my-zsh.sh
