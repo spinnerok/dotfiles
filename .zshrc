@@ -63,7 +63,7 @@ COMPLETION_WAITING_DOTS="true"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=~/.zsh-custom
+export ZSH_CUSTOM=~/.zsh-custom
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -182,6 +182,8 @@ export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$PATH
 
 export ANDROID_SDK_ROOT=$ANDROID_HOME
 
+# Required to sing a commit
+export GPG_TTY=$(tty)
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
